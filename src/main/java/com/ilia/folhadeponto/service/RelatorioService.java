@@ -1,29 +1,43 @@
 package com.ilia.folhadeponto.service;
 
-import com.ilia.folhadeponto.dtos.RelatorioDTO;
-import com.ilia.folhadeponto.entity.MomentoBatida;
-import com.ilia.folhadeponto.messages.RequestErrorMessages;
-import com.ilia.folhadeponto.model.RegistroJSON;
-import com.ilia.folhadeponto.model.RelatorioJSON;
+import static com.ilia.folhadeponto.service.MomentoBatidaService.RESPONSE_TIME_FORMAT;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+
+import java.time.DayOfWeek;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
-import java.time.*;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.*;
-import java.util.logging.Logger;
+import com.ilia.folhadeponto.dtos.RelatorioDTO;
+import com.ilia.folhadeponto.entity.MomentoBatida;
+import com.ilia.folhadeponto.messages.RequestErrorMessages;
+import com.ilia.folhadeponto.model.RegistroJSON;
+import com.ilia.folhadeponto.model.RelatorioJSON;
 
-import static com.ilia.folhadeponto.service.MomentoBatidaService.RESPONSE_TIME_FORMAT;
-
+/**
+ * Serviço responsável por gerar o relatório de ponto
+ */
 @Service
-@Transactional
 public class RelatorioService {
 
     public static final String DEFAULT_ANO_E_MES_FORMAT = "yyyy-MM";
@@ -37,6 +51,7 @@ public class RelatorioService {
     @Autowired
     private MomentoBatidaService momentoBatidaService;
 
+    @Transactional
     public RelatorioJSON gerarRelatorio(RelatorioDTO relatorioDTO) {
         LocalDateTime momento;
 

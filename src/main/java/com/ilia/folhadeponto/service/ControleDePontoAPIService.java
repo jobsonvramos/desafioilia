@@ -1,20 +1,17 @@
 package com.ilia.folhadeponto.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.ilia.folhadeponto.dtos.MomentoBatidaDTO;
 import com.ilia.folhadeponto.dtos.RelatorioDTO;
-import com.ilia.folhadeponto.entity.MomentoBatida;
 import com.ilia.folhadeponto.model.MomentoJSON;
 import com.ilia.folhadeponto.model.RegistroJSON;
 import com.ilia.folhadeponto.model.RelatorioJSON;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
-import java.sql.Timestamp;
-
+/**
+ * Serviço responsável por
+ */
 @Service
 public class ControleDePontoAPIService {
 

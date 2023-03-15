@@ -1,18 +1,20 @@
 package com.ilia.folhadeponto.entity;
 
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "MOMENTO_BATIDA")
 @NamedQueries({
-    @NamedQuery(
-        name = MomentoBatida.COUNT_ENTRADAS_EXISTENTES_BY_DATE,
-        query = MomentoBatida.QUERY_COUNT_ENTRADAS_EXISTENTES_BY_DATE
-    ),
     @NamedQuery(
         name = MomentoBatida.FIND_MOMENTO_BATIDA_BY_DATE,
         query = MomentoBatida.QUERY_FIND_MOMENTO_BATIDA_BY_DATE
@@ -24,11 +26,6 @@ import java.time.LocalDateTime;
 })
 public class MomentoBatida {
 
-    public static final String COUNT_ENTRADAS_EXISTENTES_BY_DATE
-                = "count_entradas_existentes_by_date";
-    public static final String QUERY_COUNT_ENTRADAS_EXISTENTES_BY_DATE
-                = "SELECT COUNT(*) FROM MomentoBatida mb " +
-                    "WHERE mb.dia=:dia AND mb.mes=:mes AND mb.ano=:ano";
     public static final String FIND_MOMENTO_BATIDA_BY_DATE
                 = "find_momento_batida_by_date";
     public static final String QUERY_FIND_MOMENTO_BATIDA_BY_DATE

@@ -1,26 +1,18 @@
 package com.ilia.folhadeponto.controller.validators;
 
-import com.ilia.folhadeponto.messages.RequestErrorMessages;
-import com.ilia.folhadeponto.model.MomentoJSON;
-import com.ilia.folhadeponto.service.MomentoBatidaService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-import springfox.documentation.service.ResponseMessage;
-
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-import javax.validation.ValidationException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Calendar;
-import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.ilia.folhadeponto.messages.RequestErrorMessages;
+import com.ilia.folhadeponto.model.MomentoJSON;
+import com.ilia.folhadeponto.service.MomentoBatidaService;
 
 @Service
 public class MomentoValidator implements GenericValidator<MomentoJSON>{

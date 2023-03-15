@@ -1,25 +1,31 @@
 package com.ilia.folhadeponto.service;
 
-import com.ilia.folhadeponto.dtos.MomentoBatidaDTO;
-import com.ilia.folhadeponto.entity.MomentoBatida;
-import com.ilia.folhadeponto.messages.RequestErrorMessages;
-import com.ilia.folhadeponto.model.MomentoJSON;
-import com.ilia.folhadeponto.model.RegistroJSON;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.google.common.annotations.VisibleForTesting;
+import com.ilia.folhadeponto.dtos.MomentoBatidaDTO;
+import com.ilia.folhadeponto.entity.MomentoBatida;
+import com.ilia.folhadeponto.messages.RequestErrorMessages;
+import com.ilia.folhadeponto.model.MomentoJSON;
+import com.ilia.folhadeponto.model.RegistroJSON;
+
+/**
+ * Serviço responsável por registrar e consultar batidas de ponto
+ */
 @Service
 public class MomentoBatidaService {
 
@@ -72,6 +78,7 @@ public class MomentoBatidaService {
     }
 
     @Transactional
+    @VisibleForTesting
     public MomentoBatida persistMomentoBatida(MomentoBatidaDTO momentoBatidaDTO) {
 
         MomentoBatida momentoBatida = new MomentoBatida();
@@ -98,18 +105,6 @@ public class MomentoBatidaService {
     }
 
     @Transactional
-    public Long countBatidasNaData(String dia, String mes, String ano) {
-        Query query = this.entityManager.createNamedQuery(
-                MomentoBatida.COUNT_ENTRADAS_EXISTENTES_BY_DATE,
-                MomentoBatida.class
-        );
-        query.setParameter("dia", dia);
-        query.setParameter("mes", mes);
-        query.setParameter("ano", ano);
-        return (Long)query.getSingleResult();
-    }
-
-    @Transactional
     public List<MomentoBatida> findBatidasByMesAndAno(int mes, int ano) {
         Query query = this.entityManager.createNamedQuery(
                 MomentoBatida.FIND_ALL_MOMENTO_BY_MES_AND_ANO,
@@ -120,6 +115,7 @@ public class MomentoBatidaService {
         return query.getResultList();
     }
 
+    @VisibleForTesting
     public MomentoBatidaDTO prepararDTO(MomentoJSON momentoJSON) {
 
         LocalDateTime momento;

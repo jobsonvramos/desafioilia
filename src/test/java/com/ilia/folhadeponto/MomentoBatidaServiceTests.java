@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ExtendWith(MockitoExtension.class)
-public class MomentoBatidaServiceTest {
+public class MomentoBatidaServiceTests {
 
     private MomentoBatidaService momentoBatidaService;
 

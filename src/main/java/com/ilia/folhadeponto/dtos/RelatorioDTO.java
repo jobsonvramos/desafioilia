@@ -1,6 +1,5 @@
 package com.ilia.folhadeponto.dtos;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
 public class RelatorioDTO {

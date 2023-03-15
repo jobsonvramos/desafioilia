@@ -1,7 +1,5 @@
 package com.ilia.folhadeponto.dtos;
 
-import javax.persistence.Column;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Objects;
 

@@ -29,18 +29,34 @@ public class ControleDePontoAPIController  implements V1Api{
     private ControleDePontoAPIService controleDePontoAPIService;
     @Autowired
     private MomentoValidator momentoValidator;
-//    @Autowired
-//    private RelatorioValidator relatorioValidator;
 
+    /**
+     * GET /v1/folhas-de-ponto/{mes} : Relatório mensal
+     * Geração de relatório mensal de usuário.
+     *
+     * @param mes  (required)
+     * @return Relatório mensal (status code 200)
+     *         or Relatório não encontrado (status code 404)
+     */
     @Override
     public ResponseEntity<RelatorioJSON> geraRelatorioMensal(String mes) {
         return ResponseEntity.ok(this.controleDePontoAPIService.gerarRelatorio(mes));
     }
 
+    /**
+     * POST /v1/batidas : Bater ponto
+     * Registrar um horário da jornada diária de trabalho
+     *
+     * @param momentoJSON  (optional)
+     * @return Created  (status code 201)
+     *         or Bad Request  (status code 400)
+     *         or Forbidden  (status code 403)
+     *         or Conflict  (status code 409)
+     */
     @Override
-    public ResponseEntity<RegistroJSON> insereBatida(MomentoJSON momento) {
-        this.momentoValidator.validate(momento);
-        return ResponseEntity.ok(this.controleDePontoAPIService.insereBatida(momento));
+    public ResponseEntity<RegistroJSON> insereBatida(MomentoJSON momentoJSON) {
+        this.momentoValidator.validate(momentoJSON);
+        return ResponseEntity.ok(this.controleDePontoAPIService.insereBatida(momentoJSON));
     }
 
     @ExceptionHandler(ResponseStatusException.class)
