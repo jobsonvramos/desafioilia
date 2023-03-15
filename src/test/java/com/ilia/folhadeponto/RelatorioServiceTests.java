@@ -17,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -64,6 +65,26 @@ public class RelatorioServiceTests {
 
         Assert.assertEquals(relatorioJSON.getMes(), "2023-01");
         Assert.assertEquals(relatorioJSON.getRegistros().size(), 22);
+        Assert.assertEquals(relatorioJSON.getHorasTrabalhadas(), "PT176H");
+        Assert.assertEquals(relatorioJSON.getHorasDevidas(), "PT0S");
+        Assert.assertEquals(relatorioJSON.getHorasExcedentes(), "PT0S");
+
+    }
+
+    @Test(expected = ResponseStatusException.class)
+    public void relatorioServiceTest$gerarRelatorioInvalido() {
+        
+        RelatorioDTO relatorioDTO = new RelatorioDTO();
+        relatorioDTO.setMesEAno("2023-01");
+
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(RelatorioService.DEFAULT_ANO_E_MES_FORMAT);
+        LocalDateTime momento = YearMonth.parse(relatorioDTO.getMesEAno(), dateFormat).atEndOfMonth().atStartOfDay();
+
+        List<MomentoBatida> momentosBatida = new ArrayList<>();
+
+        when(this.momentoBatidaService.findBatidasByMesAndAno(momento.getMonthValue(), momento.getYear())).thenReturn(momentosBatida);
+
+        RelatorioJSON relatorioJSON = this.relatorioService.gerarRelatorio(relatorioDTO);
 
     }
 
